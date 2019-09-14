@@ -2,7 +2,7 @@
 	$connect = mysqli_connect("localhost", "root","", "bd_dgal");
 	if (isset($_POST["query"])) {
 		$output = '';
-		$query = "SELECT * FROM orgao_origem WHERE sigla_externo LIKE '%".$_POST["query"]."%' ORDER BY sigla_externo asc";
+		$query = "SELECT * FROM orgao_origem WHERE concat(sigla_externo, descricao) LIKE '%".$_POST["query"]."%' ORDER BY sigla_externo asc";
 
 		$result = mysqli_query($connect, $query);
 
@@ -11,7 +11,7 @@
 		{
 			while ($row = mysqli_fetch_array($result)) 
 			{
-				$output .= '<li>'.$row["sigla_externo"].'</li>';
+				$output .= '<li>'.$row["sigla_externo"]."-".$row["descricao"].'</li>';
 			}
 		}else{
 			$output .= '<li> Sigla de OBM NAO encontrada </li>';
